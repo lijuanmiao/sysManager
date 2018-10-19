@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="common">
+  <sql id="Pagination_Limit">
+    <if test="pageOffset != null and pageSize != null">
+      <![CDATA[ limit #{pageOffset} , #{pageSize} ]]>
+    </if>
+  </sql>
+  <sql id="page_start">
+    <if test="params.count_record_num == 1">
+      select count(1) record_sum from (
+    </if>
+  </sql>
+  <sql id="page_end">
+    <if test="params.count_record_num == 1">
+      ) page_table
+    </if>
+    <if test="params.count_record_num != 1">
+      <if test="params.orderParam != null">
+        order by ${params.orderParam}
+      </if>
+      <if test="params.pageOffset != null and params.pageSize != null">
+        limit ${params.pageOffset} , ${params.pageSize}
+      </if>
+    </if>
+  </sql>
+</mapper>
+

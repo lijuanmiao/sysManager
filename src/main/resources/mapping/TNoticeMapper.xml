@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.sysManager.mapper.TNoticeMapper">
+  <resultMap id="BaseResultMap" type="com.cn.sysManager.models.TNotice">
+    <id column="NID" property="nid" jdbcType="INTEGER" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="CONTEXT" property="context" jdbcType="VARCHAR" />
+    <result column="BEGINTIME" property="begintime" jdbcType="TIMESTAMP" />
+    <result column="RES1" property="res1" jdbcType="VARCHAR" />
+    <result column="ENDTIME" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    NID, TITLE, CONTEXT, BEGINTIME, RES1, ENDTIME, CREATE_TIME
+  </sql>
+  <sql id="Example_Where_Clause">
+    <trim prefix="where" prefixOverrides="and|or">
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_notice
+    where NID = #{nid,jdbcType=INTEGER}
+  </select>
+  <select id="selectListByParams" resultMap="BaseResultMap" resultType="list">
+    select
+    <include refid="Base_Column_List" />
+    from t_notice
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null">
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_notice
+    where NID = #{nid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.sysManager.models.TNotice" >
+    insert into t_notice (NID, TITLE, CONTEXT, 
+      BEGINTIME, RES1, ENDTIME, 
+      CREATE_TIME)
+    values (#{nid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{context,jdbcType=VARCHAR}, 
+      #{begintime,jdbcType=TIMESTAMP}, #{res1,jdbcType=VARCHAR}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.sysManager.models.TNotice" >
+    insert into t_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nid != null" >
+        NID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="context != null" >
+        CONTEXT,
+      </if>
+      <if test="begintime != null" >
+        BEGINTIME,
+      </if>
+      <if test="res1 != null" >
+        RES1,
+      </if>
+      <if test="endtime != null" >
+        ENDTIME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nid != null" >
+        #{nid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null" >
+        #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="begintime != null" >
+        #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="res1 != null" >
+        #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.sysManager.models.TNotice" >
+    update t_notice
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null" >
+        CONTEXT = #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="begintime != null" >
+        BEGINTIME = #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="res1 != null" >
+        RES1 = #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where NID = #{nid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.sysManager.models.TNotice" >
+    update t_notice
+    set TITLE = #{title,jdbcType=VARCHAR},
+      CONTEXT = #{context,jdbcType=VARCHAR},
+      BEGINTIME = #{begintime,jdbcType=TIMESTAMP},
+      RES1 = #{res1,jdbcType=VARCHAR},
+      ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where NID = #{nid,jdbcType=INTEGER}
+  </update>
+</mapper>

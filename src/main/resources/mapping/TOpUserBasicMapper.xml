@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.sysManager.mapper.TOpUserBasicMapper">
+  <resultMap id="BaseResultMap" type="com.cn.sysManager.models.TOpUserBasic">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="up_user_id" jdbcType="INTEGER" property="upUserId" />
+    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="create_op_id" jdbcType="INTEGER" property="createOpId" />
+    <result column="create_op_name" jdbcType="VARCHAR" property="createOpName" />
+    <result column="up_ip" jdbcType="VARCHAR" property="upIp" />
+    <result column="up_time" jdbcType="BIGINT" property="upTime" />
+    <result column="lock_flag" jdbcType="TINYINT" property="lockFlag" />
+    <result column="error_count" jdbcType="INTEGER" property="errorCount" />
+    <result column="limit_lock_time" jdbcType="BIGINT" property="limitLockTime" />
+    <result column="is_active" jdbcType="TINYINT" property="isActive" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, login_name, real_name, password, mobile, email, up_user_id, department_id, create_time, 
+    create_op_id, create_op_name, up_ip, up_time, lock_flag, error_count, limit_lock_time, 
+    is_active
+  </sql>
+  <sql id="Example_Where_Clause">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test="params.loginName != null">
+         and login_name = #{params.loginName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.loginNameLike != null">
+        and login_name like '%${params.loginNameLike}%'
+      </if>
+      <if test="params.realName != null">
+         and real_name = #{params.realName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.realNameLike != null">
+        and real_name like '%${params.realNameLike}%'
+      </if>
+      <if test="params.password != null">
+         and password = #{params.password,jdbcType=VARCHAR}
+      </if>
+      <if test="params.mobile != null">
+         and mobile = #{params.mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="params.mobileLike != null">
+        and mobile like '%${params.mobileLike}%'
+      </if>
+      <if test="params.email != null">
+         and email = #{params.email,jdbcType=VARCHAR}
+      </if>
+      <if test="params.upUserId != null">
+         and up_user_id = #{params.upUserId,jdbcType=INTEGER}
+      </if>
+      <if test="params.departmentId != null">
+         and department_id = #{params.departmentId,jdbcType=INTEGER}
+      </if>
+      <if test="params.createTime != null">
+         and create_time = #{params.createTime,jdbcType=BIGINT}
+      </if>
+      <if test="params.createOpId != null">
+         and create_op_id = #{params.createOpId,jdbcType=INTEGER}
+      </if>
+      <if test="params.createOpName != null">
+         and create_op_name = #{params.createOpName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.upIp != null">
+         and up_ip = #{params.upIp,jdbcType=VARCHAR}
+      </if>
+      <if test="params.upTime != null">
+         and up_time = #{params.upTime,jdbcType=BIGINT}
+      </if>
+      <if test="params.lockFlag != null">
+         and lock_flag = #{params.lockFlag,jdbcType=TINYINT}
+      </if>
+      <if test="params.errorCount != null">
+         and error_count = #{params.errorCount,jdbcType=INTEGER}
+      </if>
+      <if test="params.limitLockTime != null">
+         and limit_lock_time = #{params.limitLockTime,jdbcType=BIGINT}
+      </if>
+      <if test="params.isActive != null">
+         and is_active = #{params.isActive,jdbcType=TINYINT}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_op_user_basic
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int">
+    select count(*) from t_op_user_basic
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultMap="BaseResultMap" resultType="list">
+    select
+    <include refid="Base_Column_List" />
+    from t_op_user_basic
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null">
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_op_user_basic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_op_user_basic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.sysManager.models.TOpUserBasic">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_op_user_basic (login_name, real_name, password, 
+      mobile, email, up_user_id, 
+      department_id, create_time, create_op_id, 
+      create_op_name, up_ip, up_time, 
+      lock_flag, error_count, limit_lock_time, 
+      is_active)
+    values (#{loginName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{upUserId,jdbcType=INTEGER}, 
+      #{departmentId,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, #{createOpId,jdbcType=INTEGER}, 
+      #{createOpName,jdbcType=VARCHAR}, #{upIp,jdbcType=VARCHAR}, #{upTime,jdbcType=BIGINT}, 
+      #{lockFlag,jdbcType=TINYINT}, #{errorCount,jdbcType=INTEGER}, #{limitLockTime,jdbcType=BIGINT}, 
+      #{isActive,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.sysManager.models.TOpUserBasic">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_op_user_basic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loginName != null">
+        login_name,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="upUserId != null">
+        up_user_id,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createOpId != null">
+        create_op_id,
+      </if>
+      <if test="createOpName != null">
+        create_op_name,
+      </if>
+      <if test="upIp != null">
+        up_ip,
+      </if>
+      <if test="upTime != null">
+        up_time,
+      </if>
+      <if test="lockFlag != null">
+        lock_flag,
+      </if>
+      <if test="errorCount != null">
+        error_count,
+      </if>
+      <if test="limitLockTime != null">
+        limit_lock_time,
+      </if>
+      <if test="isActive != null">
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loginName != null">
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="upUserId != null">
+        #{upUserId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="createOpId != null">
+        #{createOpId,jdbcType=INTEGER},
+      </if>
+      <if test="createOpName != null">
+        #{createOpName,jdbcType=VARCHAR},
+      </if>
+      <if test="upIp != null">
+        #{upIp,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null">
+        #{upTime,jdbcType=BIGINT},
+      </if>
+      <if test="lockFlag != null">
+        #{lockFlag,jdbcType=TINYINT},
+      </if>
+      <if test="errorCount != null">
+        #{errorCount,jdbcType=INTEGER},
+      </if>
+      <if test="limitLockTime != null">
+        #{limitLockTime,jdbcType=BIGINT},
+      </if>
+      <if test="isActive != null">
+        #{isActive,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.sysManager.models.TOpUserBasic">
+    update t_op_user_basic
+    <set>
+      <if test="loginName != null">
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="upUserId != null">
+        up_user_id = #{upUserId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="createOpId != null">
+        create_op_id = #{createOpId,jdbcType=INTEGER},
+      </if>
+      <if test="createOpName != null">
+        create_op_name = #{createOpName,jdbcType=VARCHAR},
+      </if>
+      <if test="upIp != null">
+        up_ip = #{upIp,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null">
+        up_time = #{upTime,jdbcType=BIGINT},
+      </if>
+      <if test="lockFlag != null">
+        lock_flag = #{lockFlag,jdbcType=TINYINT},
+      </if>
+      <if test="errorCount != null">
+        error_count = #{errorCount,jdbcType=INTEGER},
+      </if>
+      <if test="limitLockTime != null">
+        limit_lock_time = #{limitLockTime,jdbcType=BIGINT},
+      </if>
+      <if test="isActive != null">
+        is_active = #{isActive,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.sysManager.models.TOpUserBasic">
+    update t_op_user_basic
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      up_user_id = #{upUserId,jdbcType=INTEGER},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      create_op_id = #{createOpId,jdbcType=INTEGER},
+      create_op_name = #{createOpName,jdbcType=VARCHAR},
+      up_ip = #{upIp,jdbcType=VARCHAR},
+      up_time = #{upTime,jdbcType=BIGINT},
+      lock_flag = #{lockFlag,jdbcType=TINYINT},
+      error_count = #{errorCount,jdbcType=INTEGER},
+      limit_lock_time = #{limitLockTime,jdbcType=BIGINT},
+      is_active = #{isActive,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="deleteByIds">
+    update t_op_user_basic
+	 set is_active = #{isActive,jdbcType=VARCHAR} 
+	where id in  
+		<foreach close=")" collection="ids" index="index" item="item" open="(" separator=",">
+			#{item}
+		</foreach> 
+  </update>
+
+  <insert id="insertBatch" useGeneratedKeys="true" parameterType="java.util.List" keyProperty="id">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_op_user_basic (login_name, real_name, password,
+     mobile, email, up_user_id,
+     create_time,lock_flag,is_active)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.loginName},#{item.realName},#{item.password},#{item.mobile},
+      #{item.email},#{item.upUserId},#{item.createTime},#{item.lockFlag},#{item.isActive})
+    </foreach>
+  </insert>
+</mapper>
