@@ -4,7 +4,7 @@ server:
 spring:
     datasource:
         name: test
-        url: jdbc:mysql://127.0.0.1:3306/student
+        url: jdbc:mysql://127.0.0.1:3306/student?characterEncoding=UTF-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useSSL=false
         username: root
         password: root
         # 使用druid数据源

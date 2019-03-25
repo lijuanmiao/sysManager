@@ -1,4 +1,4 @@
-package com.cn.api.imageCode;
+package com.cn.sysManager.api.imageCode;
 
 import com.cn.sysManager.toolbox.utils.ImageCodeUtils;
 import io.swagger.annotations.Api;
@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletResponse;
 
 /**

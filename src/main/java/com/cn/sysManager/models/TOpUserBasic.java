@@ -15,10 +15,10 @@ import java.io.Serializable;
 public class TOpUserBasic implements Serializable{
 
      private Integer id;
-    @ApiModelProperty(value = "登录名")
+     @ApiModelProperty(value = "登录名")
      private String loginName;
 
-    @ApiModelProperty(value = "真实姓名")
+     @ApiModelProperty(value = "真实姓名")
      private String realName;
      private String password;
      private String mobile;

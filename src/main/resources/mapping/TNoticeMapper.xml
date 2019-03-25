@@ -23,6 +23,7 @@
     from t_notice
     where NID = #{nid,jdbcType=INTEGER}
   </select>
+
   <select id="selectListByParams" resultMap="BaseResultMap" resultType="list">
     select
     <include refid="Base_Column_List" />
@@ -33,7 +34,6 @@
     </if>
     <include refid="common.Pagination_Limit" />
   </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_notice
     where NID = #{nid,jdbcType=INTEGER}

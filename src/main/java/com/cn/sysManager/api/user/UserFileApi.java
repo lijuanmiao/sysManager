@@ -1,4 +1,4 @@
-package com.cn.api.user;
+package com.cn.sysManager.api.user;
 
 import com.cn.sysManager.common.ApiResultHelper;
 import com.cn.sysManager.exceptions.ApiException;

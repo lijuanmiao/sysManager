@@ -12,4 +12,7 @@ public interface TOpUserBasicMapper extends IBaseMapper<TOpUserBasic> {
     //批量新增
     int insertBatch(List<TOpUserBasic> user);
 
+    //批量更新
+    int updateBatch(List<TOpUserBasic> opUserBasics);
+
 }

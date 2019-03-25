@@ -1,8 +1,11 @@
 package com.cn.sysManager.controller;
 
 import com.cn.sysManager.common.ApiResultHelper;
+import com.cn.sysManager.common.Order;
+import com.cn.sysManager.models.TDictCountryCity;
 import com.cn.sysManager.models.TOpUserBasic;
 import com.cn.sysManager.service.IOpuserBasicService;
+import com.cn.sysManager.service.sys.IDictCountryCityService;
 import com.cn.sysManager.toolbox.DateUtil;
 import com.cn.sysManager.toolbox.PasswordHandler;
 import com.cn.sysManager.toolbox.constant.CommonTypeConstant;
@@ -34,6 +37,10 @@ public class OpUserBasicController {
     @Autowired
     private IOpuserBasicService opuserBasicService;
 
+
+    @Autowired
+    private IDictCountryCityService dictCountryCityService;
+
     @Autowired
     private Environment env;
 
@@ -44,7 +51,6 @@ public class OpUserBasicController {
 
         return  opuserBasicService.getOpUserBasic(id);
     }
-
 
     @RequestMapping(value = "/reImport",method = RequestMethod.POST)
     @ApiOperation(value = "批量新增用户信息", notes = "批量新增用户信息")
@@ -111,10 +117,11 @@ public class OpUserBasicController {
 
         Map<String,Object> params = new HashMap<String,Object>();
         List<TOpUserBasic> userList = opuserBasicService.getAll(params);
+
+        List<TDictCountryCity> cityList = dictCountryCityService.findListByParams(params, Order.asc("id"));
         out = response.getOutputStream();
 
-        int maxLen = 3;//excel的sheet最大存多少数据
-       ExcelUtil.generateExcelByTemplate(out, inputStream, userList, "userList", maxLen);
+        int maxLen = 10000;//excel的sheet最大存多少数据
+       ExcelUtil.generateExcelByTemplateList(out, inputStream,response, userList, "userList",cityList,"cityList", maxLen);
     }
-
 }

@@ -70,7 +70,6 @@ public class DateUtil {
 
     /**
      * 自定义格式的字符串转换成日期
-     *
      * @author lijm
      * @param timeString
      * @param fmt

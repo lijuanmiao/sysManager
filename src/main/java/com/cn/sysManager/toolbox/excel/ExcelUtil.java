@@ -1,5 +1,6 @@
 package com.cn.sysManager.toolbox.excel;
 
+import com.cn.sysManager.toolbox.DateUtil;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -9,9 +10,11 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import java.io.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 
 /**
  * excel工具类
@@ -222,7 +225,72 @@ public class ExcelUtil {
 
         return splitData;
     }
+    @SuppressWarnings("rawtypes")
+    public static void generateExcelByTemplateList(OutputStream destOutputStream,
+                                               InputStream templateInputStream,
+                                               HttpServletResponse response,
+                                               List data, String dataKey,
+                                               List data1, String dataKey1,
+                                               int maxRowPerSheet) throws Exception {
+        generateExcelByTemplate(destOutputStream,
+                templateInputStream,response,
+                null, null,
+                data, dataKey,
+                data1, dataKey1,
+                maxRowPerSheet);
+    }
+    @SuppressWarnings("rawtypes")
+    public static void generateExcelByTemplate(OutputStream destOutputStream,
+                                               InputStream templateInputStream,
+                                               HttpServletResponse response,
+                                               List header, String headerKey,
+                                               List data, String dataKey,
+                                               List data1, String dataKey1,
+                                               int maxRowPerSheet) throws Exception {
+        OutputStream out = null;
+        try{
+            List<List> splitData = null;
+            List<List> splitData1 = null;
+            List<List> splitData2 = null;
+            @SuppressWarnings("unchecked")
+            Map<String, List> beanMap = new HashMap();
+            List<String> sheetNames = new ArrayList<String>();
+            if (data!=null&&data.size() > maxRowPerSheet
+                    || data1!=null&&data1.size() > maxRowPerSheet) {
+                splitData = splitList(data, maxRowPerSheet);
+                splitData1 = splitList(data1,maxRowPerSheet);
+                sheetNames = new ArrayList<String>(splitData.size());
+                for (int i = 0; i < splitData.size(); ++i) {
+                    sheetNames.add(DateUtil.formatTime(DateUtil.getTime(), "yyyyMMdd") + "_用户信息");
+                    sheetNames.add(DateUtil.formatTime(DateUtil.getTime(), "yyyyMMdd") + "_城市编码");
+                }
+                beanMap.put("cityList", splitData1);
+            } else {
 
+                splitData = new ArrayList<List>();
+                splitData.add(data);
+                splitData.add(data1);
+                sheetNames.add(DateUtil.formatTime(DateUtil.getTime(), "yyyyMMdd") + "_用户信息");
+                sheetNames.add(DateUtil.formatTime(DateUtil.getTime(), "yyyyMMdd") + "_城市编码");
+                beanMap.put("cityList", data1);
+            }
+            XLSTransformer transformer = new XLSTransformer();
+            Workbook workbook = transformer.transformMultipleSheetsList(
+                    templateInputStream, splitData, sheetNames, dataKey, beanMap, 0);
+           // workbook.removeSheetAt(workbook.getSheetIndex(DateUtil.formatTime(DateUtil.getTime(), "yyyyMMdd") + "_SY8管理费账户"));
+            workbook.write(destOutputStream);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally{
+            try {
+                if (out != null)
+                    out.close();
+                out = null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     /*public static  void  main(String[] args){
         try {
 
@@ -240,5 +308,4 @@ public class ExcelUtil {
             e.printStackTrace();
         }
     }*/
-
 }

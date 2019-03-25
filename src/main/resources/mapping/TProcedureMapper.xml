@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cn.sysManager.mapper.TOpUserBasicMapper">
+<mapper namespace="com.cn.sysManager.mapper.TProcedureMapper">
   <resultMap id="BaseResultMap" type="com.cn.sysManager.models.TOpUserBasic">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="login_name" jdbcType="VARCHAR" property="loginName" />
@@ -25,6 +25,11 @@
     create_op_id, create_op_name, up_ip, up_time, lock_flag, error_count, limit_lock_time, 
     is_active
   </sql>
+
+  <select id="selectProData" resultMap="BaseResultMap">
+    <![CDATA[CALL pro_data(#{start_date,jdbcType=VARCHAR})]]>
+  </select>
+
   <sql id="Example_Where_Clause">
     <trim prefix="where" prefixOverrides="and|or">
       <if test="params.loginName != null">
@@ -38,9 +43,6 @@
       </if>
       <if test="params.realNameLike != null">
         and real_name like '%${params.realNameLike}%'
-      </if>
-      <if test="params.realNames !=null">
-        and real_name in(${params.realNames})
       </if>
       <if test="params.password != null">
          and password = #{params.password,jdbcType=VARCHAR}
@@ -63,6 +65,7 @@
       <if test="params.createTime != null">
          and create_time = #{params.createTime,jdbcType=BIGINT}
       </if>
+     /* and status in(${params.inStatus})*/
       <if test="params.dateBegin != null">
         <![CDATA[
            and create_time >= #{params.dateBegin,jdbcType=BIGINT}
@@ -99,33 +102,7 @@
       </if>
     </trim>
   </sql>
-  <select id="selectByParams" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_op_user_basic
-    <include refid="Example_Where_Clause" />
-  </select>
-  <select id="selectCountByParams" resultType="int">
-    select count(*) from t_op_user_basic
-    <include refid="Example_Where_Clause" />
-  </select>
 
-  <select id="selectListByParams" resultMap="BaseResultMap" resultType="list">
-    select
-    <include refid="Base_Column_List" />
-    from t_op_user_basic
-    <include refid="Example_Where_Clause" />
-    <if test="orderParam != null">
-      order by ${orderParam}
-    </if>
-    <include refid="common.Pagination_Limit" />
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_op_user_basic
-    where id = #{id,jdbcType=INTEGER}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_op_user_basic
     where id = #{id,jdbcType=INTEGER}

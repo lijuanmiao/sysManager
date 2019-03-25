@@ -12,6 +12,11 @@ public class CommonTypeConstant {
     public static final Integer DEFAULT_PAGE_SIZE = 20;
 
     /**
+     * 返回成功 编码
+     */
+    public static final String RE_SUCCESS_CODE = "0000";
+
+    /**
      * 是和否
      */
     public enum YesOrNo{
