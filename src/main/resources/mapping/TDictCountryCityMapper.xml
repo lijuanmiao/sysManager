@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.sysManager.mapper.TDictCountryCityMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.sysManager.models.TDictCountryCity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cc_code" property="ccCode" jdbcType="VARCHAR" />
+    <result column="cc_name" property="ccName" jdbcType="VARCHAR" />
+    <result column="cc_up_code" property="ccUpCode" jdbcType="VARCHAR" />
+    <result column="cc_desc" property="ccDesc" jdbcType="VARCHAR" />
+    <result column="cc_zip" property="ccZip" jdbcType="VARCHAR" />
+    <result column="cc_py" property="ccPy" jdbcType="VARCHAR" />
+    <result column="cc_short_name" property="ccShortName" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="is_active" property="isActive" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cc_code, cc_name, cc_up_code, cc_desc, cc_zip, cc_py, cc_short_name, ext1, ext2, 
+    is_active
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dict_country_city
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <sql id="Example_Where_Clause">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test="params.cCode != null">
+        and cc_code = #{params.cCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.upCode != null">
+        OR cc_up_code = #{params.upCode,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectListByParams" resultMap="BaseResultMap" resultType="list">
+    select
+    <include refid="Base_Column_List" />
+    from t_dict_country_city
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null">
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dict_country_city
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.sysManager.models.TDictCountryCity" >
+    insert into t_dict_country_city (id, cc_code, cc_name, 
+      cc_up_code, cc_desc, cc_zip, 
+      cc_py, cc_short_name, ext1, 
+      ext2, is_active)
+    values (#{id,jdbcType=INTEGER}, #{ccCode,jdbcType=VARCHAR}, #{ccName,jdbcType=VARCHAR}, 
+      #{ccUpCode,jdbcType=VARCHAR}, #{ccDesc,jdbcType=VARCHAR}, #{ccZip,jdbcType=VARCHAR}, 
+      #{ccPy,jdbcType=VARCHAR}, #{ccShortName,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{ext2,jdbcType=VARCHAR}, #{isActive,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.sysManager.models.TDictCountryCity" >
+    insert into t_dict_country_city
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ccCode != null" >
+        cc_code,
+      </if>
+      <if test="ccName != null" >
+        cc_name,
+      </if>
+      <if test="ccUpCode != null" >
+        cc_up_code,
+      </if>
+      <if test="ccDesc != null" >
+        cc_desc,
+      </if>
+      <if test="ccZip != null" >
+        cc_zip,
+      </if>
+      <if test="ccPy != null" >
+        cc_py,
+      </if>
+      <if test="ccShortName != null" >
+        cc_short_name,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ccCode != null" >
+        #{ccCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ccName != null" >
+        #{ccName,jdbcType=VARCHAR},
+      </if>
+      <if test="ccUpCode != null" >
+        #{ccUpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ccDesc != null" >
+        #{ccDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ccZip != null" >
+        #{ccZip,jdbcType=VARCHAR},
+      </if>
+      <if test="ccPy != null" >
+        #{ccPy,jdbcType=VARCHAR},
+      </if>
+      <if test="ccShortName != null" >
+        #{ccShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.sysManager.models.TDictCountryCity" >
+    update t_dict_country_city
+    <set >
+      <if test="ccCode != null" >
+        cc_code = #{ccCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ccName != null" >
+        cc_name = #{ccName,jdbcType=VARCHAR},
+      </if>
+      <if test="ccUpCode != null" >
+        cc_up_code = #{ccUpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ccDesc != null" >
+        cc_desc = #{ccDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ccZip != null" >
+        cc_zip = #{ccZip,jdbcType=VARCHAR},
+      </if>
+      <if test="ccPy != null" >
+        cc_py = #{ccPy,jdbcType=VARCHAR},
+      </if>
+      <if test="ccShortName != null" >
+        cc_short_name = #{ccShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.sysManager.models.TDictCountryCity" >
+    update t_dict_country_city
+    set cc_code = #{ccCode,jdbcType=VARCHAR},
+      cc_name = #{ccName,jdbcType=VARCHAR},
+      cc_up_code = #{ccUpCode,jdbcType=VARCHAR},
+      cc_desc = #{ccDesc,jdbcType=VARCHAR},
+      cc_zip = #{ccZip,jdbcType=VARCHAR},
+      cc_py = #{ccPy,jdbcType=VARCHAR},
+      cc_short_name = #{ccShortName,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      is_active = #{isActive,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
