@@ -5,6 +5,6 @@ package com.cn.sysManager.service;
  */
 public interface ITemplateMessageService {
 
-    void sendUnpaidBillMsg(String openId,String billType,String needPay,String day,String billStatus,String url);
+    void sendMsg();
 
 }
