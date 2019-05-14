@@ -291,6 +291,24 @@ public class ExcelUtil {
             }
         }
     }
+
+    /**
+     * 多模板数据导出
+     * @param destOutputStream
+     * @param templateInputStream
+     * @param model
+     * @throws Exception
+     */
+    public static void generateExcelByTemplates(OutputStream destOutputStream,
+                                                InputStream templateInputStream,
+                                                Map<String, Object> model) throws Exception {
+
+        //转换成excel并输出
+        XLSTransformer transformer = new XLSTransformer();
+        Workbook workbook = transformer.transformXLS(templateInputStream, model);
+        //将内容写入输出流并把缓存的内容全部发出去
+        workbook.write(destOutputStream);
+    }
     /*public static  void  main(String[] args){
         try {
 

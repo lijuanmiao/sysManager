@@ -97,4 +97,16 @@ public class DateUtil {
             return "";
         }
     }
+
+    public static String plusDay(int num,String newDate) throws Exception{
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date currdate = format.parse(newDate);
+        System.out.println("现在的日期是：" + currdate);
+        Calendar ca = Calendar.getInstance();
+        ca.add(Calendar.DATE, num);// num为增加的天数，可以改变的
+        currdate = ca.getTime();
+        String enddate = format.format(currdate);
+        System.out.println("增加天数以后的日期：" + enddate);
+        return enddate;
+    }
 }
